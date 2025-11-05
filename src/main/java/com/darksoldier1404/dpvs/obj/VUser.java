@@ -72,10 +72,8 @@ public class VUser implements DataCargo {
             }
         });
 
-        // availableSlots 은 45 이상, 즉 1페이지 이상일 수 있음.
-        int skipPage = availableSlots / 45; // 건너뛸 페이지 수
-        int skipSlot = availableSlots % 45; // 건너뛸 슬롯 수
-        // 마지막 페이지의 남은 슬롯을 제외한 나머지 슬롯을 막음
+        int skipPage = availableSlots / 45;
+        int skipSlot = availableSlots % 45;
 
         Map<Integer, ItemStack[]> pageItems = inventory.getPageItems();
         for (int page = skipPage; page < pages + 1; page++) {
@@ -87,16 +85,16 @@ public class VUser implements DataCargo {
             }
         }
         inventory.setPageItems(pageItems);
-        inventory.update(); // 인벤토리 업데이트
-        inventory.applyChanges(); // 변경 사항 적용
+        inventory.update();
+        inventory.applyChanges();
         if (isLookup) {
-            inventory.setObj(uuid); // 관리자 조회용으로 유저 UUID 저장
+            inventory.setObj(uuid);
             inventory.setChannel(1);
         } else {
             inventory.setObj(null);
             inventory.setChannel(0);
         }
-        inventory.openInventory(p); // 인벤토리 오픈
+        inventory.openInventory(p);
     }
 
     @Override

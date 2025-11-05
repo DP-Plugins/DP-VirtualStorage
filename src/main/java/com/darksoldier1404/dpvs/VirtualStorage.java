@@ -1,5 +1,7 @@
 package com.darksoldier1404.dpvs;
 
+import com.darksoldier1404.dppc.annotation.DPPCoreVersion;
+import com.darksoldier1404.dppc.api.logger.DLogNode;
 import com.darksoldier1404.dppc.data.DPlugin;
 import com.darksoldier1404.dppc.data.DataContainer;
 import com.darksoldier1404.dppc.data.DataType;
@@ -10,6 +12,7 @@ import com.darksoldier1404.dpvs.obj.VUser;
 
 import java.util.UUID;
 
+@DPPCoreVersion(since = "5.3.0")
 public class VirtualStorage extends DPlugin {
     public static VirtualStorage plugin;
     public static DataContainer<UUID, VUser> udata;
@@ -28,14 +31,18 @@ public class VirtualStorage extends DPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         PluginUtil.addPlugin(plugin, 27498);
+    }
+
+    @Override
+    public void onEnable() {
         getCommand("dpvs").setExecutor(new DPVSCommand().getBuilder());
         getServer().getPluginManager().registerEvents(new DPVSEvent(), plugin);
     }
 
     @Override
     public void onDisable() {
-        saveDataContainer();
+        saveAllData();
     }
 }

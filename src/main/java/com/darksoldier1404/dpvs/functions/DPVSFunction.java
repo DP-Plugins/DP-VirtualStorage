@@ -57,10 +57,13 @@ public class DPVSFunction {
         plugin.saveDataContainer();
     }
 
+    @Nullable
     public static ItemStack getCoupon(int slots) {
-        ItemStack coupon = plugin.config.getItemStack("Settings.couponItem").clone();
-        coupon = NBT.setIntTag(coupon, "dpvs_couponslot", slots);
-        return coupon;
+        ItemStack coupon = plugin.config.getItemStack("Settings.couponItem");
+        if (coupon == null || coupon.getType().isAir()) {
+            return null;
+        }
+        return NBT.setIntTag(coupon, "dpvs_couponslot", slots);
     }
 
     public static void giveCoupon(CommandSender sender, String sSlots) {
@@ -81,6 +84,10 @@ public class DPVSFunction {
             return;
         }
         ItemStack coupon = getCoupon(slots);
+        if (coupon == null || coupon.getType().isAir()) {
+            p.sendMessage("§c쿠폰 아이템이 설정되어 있지 않습니다. 관리자에게 문의하세요.");
+            return;
+        }
         coupon = applyPlaceholder(coupon);
         p.getInventory().addItem(coupon);
         p.sendMessage("§a쿠폰을 지급하였습니다. (" + slots + " 슬롯)");

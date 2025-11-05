@@ -1,6 +1,5 @@
 package com.darksoldier1404.dpvs.commands;
 
-import com.darksoldier1404.dppc.api.inventory.DInventory;
 import com.darksoldier1404.dppc.builder.command.CommandBuilder;
 import com.darksoldier1404.dpvs.functions.DPVSFunction;
 import com.darksoldier1404.dpvs.obj.VUser;

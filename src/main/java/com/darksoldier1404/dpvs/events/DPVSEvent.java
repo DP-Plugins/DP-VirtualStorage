@@ -1,14 +1,14 @@
 package com.darksoldier1404.dpvs.events;
 
 import com.darksoldier1404.dppc.api.inventory.DInventory;
+import com.darksoldier1404.dppc.events.dinventory.DInventoryCloseEvent;
 import com.darksoldier1404.dppc.utils.NBT;
 import com.darksoldier1404.dpvs.functions.DPVSFunction;
 import com.darksoldier1404.dpvs.obj.VUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -41,69 +41,33 @@ public class DPVSEvent implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getClickedInventory() == null || e.getClickedInventory().getHolder() == null) {
-            return;
-        }
-        if (e.getClickedInventory().getHolder() instanceof DInventory) {
-            DInventory inv = (DInventory) e.getClickedInventory().getHolder();
-            Player p = (Player) e.getWhoClicked();
-            if (inv.isValidHandler(plugin)) {
-                ItemStack item = e.getCurrentItem();
-                if (item == null || item.getType().isAir()) {
-                    return;
-                }
-                if (NBT.hasTagKey(item, "dppc_prevpage")) {
-                    inv.applyChanges();
-                    inv.prevPage();
-                    e.setCancelled(true);
-                    return;
-                }
-                if (NBT.hasTagKey(item, "dppc_nextpage")) {
-                    inv.applyChanges();
-                    inv.nextPage();
-                    e.setCancelled(true);
-                    return;
-                }
-                if (NBT.hasTagKey(item, "dppc_clickcancel") || NBT.hasTagKey(item, "dpvs_barrier")) {
-                    e.setCancelled(true);
-                    return;
-                }
+    public void onInventoryClose(DInventoryCloseEvent e) {
+        Player p = (Player) e.getPlayer();
+        DInventory inv = e.getDInventory();
+        if (inv.isValidHandler(plugin)) {
+            if (inv.isValidChannel(0)) { // user storage save
+                inv.applyChanges();
+                VUser user = plugin.udata.get(p.getUniqueId());
+                user.setInventory(inv);
+                plugin.udata.put(p.getUniqueId(), user);
+                plugin.udata.save(p.getUniqueId());
+                return;
             }
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent e) {
-        if (e.getInventory().getHolder() == null) return;
-        if (e.getInventory().getHolder() instanceof DInventory) {
-            Player p = (Player) e.getPlayer();
-            DInventory inv = (DInventory) e.getInventory().getHolder();
-            if (inv.isValidHandler(plugin)) {
-                if (inv.isValidChannel(0)) { // user storage save
-                    inv.applyChanges();
-                    VUser user = plugin.udata.get(p.getUniqueId());
+            if (inv.isValidChannel(1)) { // admin lookup save
+                inv.applyChanges();
+                if (inv.getObj() != null) {
+                    VUser user = plugin.udata.get((UUID) inv.getObj());
                     user.setInventory(inv);
-                    plugin.udata.put(p.getUniqueId(), user);
-                    plugin.udata.save(p.getUniqueId());
-                    return;
+                    plugin.udata.put((UUID) inv.getObj(), user);
+                    plugin.udata.save((UUID) inv.getObj());
                 }
-                if (inv.isValidChannel(1)) { // admin lookup save
-                    inv.applyChanges();
-                    if (inv.getObj() != null) {
-                        VUser user = plugin.udata.get((UUID) inv.getObj());
-                        user.setInventory(inv);
-                        plugin.udata.put((UUID) inv.getObj(), user);
-                        plugin.udata.save((UUID) inv.getObj());
-                    }
-                    return;
-                }
-                if (inv.isValidChannel(101)) {
-                    inv.applyChanges();
-                    DPVSFunction.saveCouponItem(inv.getItem(13));
-                    p.sendMessage(plugin.getPrefix() + "§a쿠폰 아이템이 저장되었습니다.");
-                    return;
-                }
+                return;
+            }
+            if (inv.isValidChannel(101)) {
+                inv.applyChanges();
+                DPVSFunction.saveCouponItem(inv.getItem(13));
+                p.sendMessage(plugin.getPrefix() + "§a쿠폰 아이템이 저장되었습니다.");
+                return;
             }
         }
     }
@@ -127,6 +91,18 @@ public class DPVSEvent implements Listener {
             } else {
                 p.sendMessage("§c가상 창고 슬롯을 더 이상 늘릴 수 없습니다.");
             }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        System.out.println(e.getBlock().getType());
+    }
+
+    @EventHandler
+    public void onInteractTest(PlayerInteractEvent e) {
+        if (e.getClickedBlock() != null) {
+            e.getClickedBlock().breakNaturally();
         }
     }
 }
