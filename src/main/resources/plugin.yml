@@ -1,8 +1,8 @@
 name: DP-VirtualStorage
-version: 1.0.0
+version: 1.1.0
 main: com.darksoldier1404.dpvs.VirtualStorage
 authors: [ DEAD_POOLIO_ ]
-api-version: 1.16
+api-version: 1.20
 depend:
   - DPP-Core
   - PlaceholderAPI

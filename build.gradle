@@ -7,10 +7,10 @@ group 'com.darksoldier1404'
 
 // ##################################################
 
-version = '1.0.0'
+version = '1.1.0'
 var pluginName = 'DP-VirtualStorage'
 var packageName = 'com.darksoldier1404.dpvs'
-var apiVersion = '1.16.5'
+var apiVersion = '1.20.1'
 
 // ##################################################
 
@@ -29,7 +29,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = packageName
             artifactId = pluginName
-            artifact 'jars/'+ pluginName + "-${version}-SNAPSHOT.jar"
+            artifact 'jars/' + pluginName + "-${version}-SNAPSHOT.jar"
             version = "Main-SNAPSHOT"
         }
     }
@@ -65,7 +65,7 @@ task DS_BUILD {
                     FileReader fr = new FileReader(f)
                     BufferedReader br = new BufferedReader(fr)
                     while ((line = br.readLine()) != null) {
-                        if(line.contains("version") && !line.contains("api")) {
+                        if (line.contains("version") && !line.contains("api")) {
                             line = "version: " + newVersion
                         }
                         lines.add(line + "\n")
@@ -96,5 +96,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     compileOnly "com.bukkit:craftbukkit:" + apiVersion
     compileOnly "com.bukkit:spigot:" + apiVersion
-    compileOnly "com.darksoldier1404.dppc:DPP-Core:5.2-SNAPSHOT"
+    compileOnly "com.darksoldier1404.dppc:DPP-Core:5.3-SNAPSHOT"
+
 }
