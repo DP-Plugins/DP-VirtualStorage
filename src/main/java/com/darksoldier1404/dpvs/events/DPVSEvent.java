@@ -93,16 +93,4 @@ public class DPVSEvent implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        System.out.println(e.getBlock().getType());
-    }
-
-    @EventHandler
-    public void onInteractTest(PlayerInteractEvent e) {
-        if (e.getClickedBlock() != null) {
-            e.getClickedBlock().breakNaturally();
-        }
-    }
 }
