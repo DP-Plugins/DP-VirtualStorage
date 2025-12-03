@@ -1,6 +1,7 @@
 package com.darksoldier1404.dpvs.events;
 
 import com.darksoldier1404.dppc.api.inventory.DInventory;
+import com.darksoldier1404.dppc.events.dinventory.DInventoryClickEvent;
 import com.darksoldier1404.dppc.events.dinventory.DInventoryCloseEvent;
 import com.darksoldier1404.dppc.utils.NBT;
 import com.darksoldier1404.dpvs.functions.DPVSFunction;
@@ -8,7 +9,6 @@ import com.darksoldier1404.dpvs.obj.VUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -95,14 +95,15 @@ public class DPVSEvent implements Listener {
     }
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        System.out.println(e.getBlock().getType());
-    }
-
-    @EventHandler
-    public void onInteractTest(PlayerInteractEvent e) {
-        if (e.getClickedBlock() != null) {
-            e.getClickedBlock().breakNaturally();
+    public void onInventoryClick(DInventoryClickEvent e) {
+        DInventory inv = e.getDInventory();
+        if (inv.isValidHandler(plugin)) {
+            if (inv.isValidChannel(0) || inv.isValidChannel(1)) {
+                if(e.getCurrentItem() != null && NBT.hasTagKey(e.getCurrentItem(), "dpvs_barrier")) {
+                    e.setCancelled(true);
+                    return;
+                }
+            }
         }
     }
 }
