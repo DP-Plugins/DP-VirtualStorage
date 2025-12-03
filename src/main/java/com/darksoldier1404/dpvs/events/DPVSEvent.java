@@ -1,6 +1,7 @@
 package com.darksoldier1404.dpvs.events;
 
 import com.darksoldier1404.dppc.api.inventory.DInventory;
+import com.darksoldier1404.dppc.events.dinventory.DInventoryClickEvent;
 import com.darksoldier1404.dppc.events.dinventory.DInventoryCloseEvent;
 import com.darksoldier1404.dppc.utils.NBT;
 import com.darksoldier1404.dpvs.functions.DPVSFunction;
@@ -89,6 +90,19 @@ public class DPVSEvent implements Listener {
                 item.setAmount(item.getAmount() - 1);
             } else {
                 p.sendMessage("§c가상 창고 슬롯을 더 이상 늘릴 수 없습니다.");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(DInventoryClickEvent e) {
+        DInventory inv = e.getDInventory();
+        if (inv.isValidHandler(plugin)) {
+            if (inv.isValidChannel(0) || inv.isValidChannel(1)) {
+                if(e.getCurrentItem() != null && NBT.hasTagKey(e.getCurrentItem(), "dpvs_barrier")) {
+                    e.setCancelled(true);
+                    return;
+                }
             }
         }
     }
