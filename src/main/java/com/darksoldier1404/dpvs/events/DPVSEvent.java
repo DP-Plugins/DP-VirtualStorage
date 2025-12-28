@@ -85,9 +85,12 @@ public class DPVSEvent implements Listener {
                 p.sendMessage("§c쿠폰 슬롯이 올바르지 않습니다.");
                 return;
             }
-            if (plugin.udata.get(p.getUniqueId()).addStorageSlots(slots)) {
+            VUser user = plugin.udata.get(p.getUniqueId());
+            boolean success = user.addStorageSlots(slots);
+            if (success) {
                 p.sendMessage("§a쿠폰이 사용되었습니다. 가상 창고 슬롯이 " + slots + "칸 증가하였습니다.");
                 item.setAmount(item.getAmount() - 1);
+                plugin.udata.put(p.getUniqueId(), user);
             } else {
                 p.sendMessage("§c가상 창고 슬롯을 더 이상 늘릴 수 없습니다.");
             }
@@ -99,7 +102,7 @@ public class DPVSEvent implements Listener {
         DInventory inv = e.getDInventory();
         if (inv.isValidHandler(plugin)) {
             if (inv.isValidChannel(0) || inv.isValidChannel(1)) {
-                if(e.getCurrentItem() != null && NBT.hasTagKey(e.getCurrentItem(), "dpvs_barrier")) {
+                if (e.getCurrentItem() != null && NBT.hasTagKey(e.getCurrentItem(), "dpvs_barrier")) {
                     e.setCancelled(true);
                     return;
                 }
