@@ -71,20 +71,21 @@ public class VUser implements DataCargo {
                 inventory.setPageItem(pi.getPage(), pi.getSlot(), null);
             }
         });
+        inventory.update();
+        inventory.applyChanges();
 
         int skipPage = availableSlots / 45;
         int skipSlot = availableSlots % 45;
+        if (skipSlot == 0) {
+            skipPage++;
+        }
 
-        Map<Integer, ItemStack[]> pageItems = inventory.getPageItems();
-        for (int page = skipPage; page < pages + 1; page++) {
+        for (int page = skipPage; page < pages; page++) {
             int startSlot = (page == skipPage) ? skipSlot : 0;
             for (int slot = startSlot; slot < 45; slot++) {
-                if (pageItems.containsKey(page)) {
-                    inventory.setPageItem(page, slot, barrier);
-                }
+                inventory.setPageItem(page, slot, barrier);
             }
         }
-        inventory.setPageItems(pageItems);
         inventory.update();
         inventory.applyChanges();
         if (isLookup) {
