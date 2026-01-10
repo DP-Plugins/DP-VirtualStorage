@@ -18,7 +18,7 @@ public class DPVSFunction {
         plugin.defaultStorageSlot = slot;
         plugin.getConfig().set("Settings.defaultStorageSlot", slot);
         plugin.saveDataContainer();
-        sender.sendMessage("§a기본 저장소 슬롯이 " + slot + "으로 설정되었습니다.");
+        sender.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("command_defaultslot_set_success", String.valueOf(slot)));
     }
 
     @Nullable
@@ -33,11 +33,11 @@ public class DPVSFunction {
 
     public static void openCouponSettingGUI(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§c플레이어만 사용 가능한 명령어입니다.");
+            sender.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_player_only"));
             return;
         }
         Player p = (Player) sender;
-        DInventory inv = new DInventory("§6쿠폰 설정", 27, plugin);
+        DInventory inv = new DInventory(plugin.getLang().get("gui_coupon_setting_title"), 27, plugin);
         ItemStack pane = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta meta = pane.getItemMeta();
         meta.setDisplayName(" ");
@@ -68,7 +68,7 @@ public class DPVSFunction {
 
     public static void giveCoupon(CommandSender sender, String sSlots) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§c플레이어만 사용 가능한 명령어입니다.");
+            sender.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_player_only"));
             return;
         }
         Player p = (Player) sender;
@@ -76,21 +76,21 @@ public class DPVSFunction {
         try {
             slots = Integer.parseInt(sSlots);
             if (slots < 1) {
-                p.sendMessage("§c슬롯은 1 이상이어야 합니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_defaultslot_invalid_slot"));
                 return;
             }
         } catch (NumberFormatException e) {
-            p.sendMessage("§c숫자 형식이 올바르지 않습니다.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_invalid_number"));
             return;
         }
         ItemStack coupon = getCoupon(slots);
         if (coupon == null || coupon.getType().isAir()) {
-            p.sendMessage("§c쿠폰 아이템이 설정되어 있지 않습니다. 관리자에게 문의하세요.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("coupon_not_configured"));
             return;
         }
         coupon = applyPlaceholder(coupon);
         p.getInventory().addItem(coupon);
-        p.sendMessage("§a쿠폰을 지급하였습니다. (" + slots + " 슬롯)");
+        p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("coupon_given", String.valueOf(slots)));
     }
 
     public static ItemStack applyPlaceholder(ItemStack item) {

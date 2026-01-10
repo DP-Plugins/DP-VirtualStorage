@@ -1,0 +1,30 @@
+command_common_invalid_number: "§cInvalid number format."
+command_common_player_only: "§cThis command can only be used by players."
+
+command_defaultslot_invalid_slot: "§cSlot must be 1 or higher."
+command_defaultslot_set_success: "§aDefault storage slot has been set to {0}."
+
+command_lookup_data_not_found: "§cThat player's data doesn't exist."
+command_lookup_player_not_found: "§cPlayer not found."
+
+command_reload_success: "§aPlugin reloaded."
+
+command_usage_defaultslot: "/dpvs defaultslot <slot>"
+command_usage_givecoupon: "/dpvs givecoupon <slots>"
+command_usage_lookup: "/dpvs lookup <player>"
+command_usage_open: "/dpvs open"
+command_usage_reload: "/dpvs reload"
+command_usage_setcoupon: "/dpvs setcoupon"
+
+coupon_cannot_increase_more: "§cYou can't increase virtual storage slots any further."
+coupon_given: "§aCoupon has been given. ({0} slots)"
+coupon_invalid_slots: "§cInvalid coupon slot value."
+coupon_item_saved: "§aCoupon item has been saved."
+coupon_not_configured: "§cCoupon item isn't configured. Please contact an administrator."
+coupon_used_increase_slots: "§aCoupon used. Virtual storage slots increased by {0}."
+
+gui_coupon_setting_title: "§6Coupon Settings"
+
+inventory_storage_title: "Virtual Storage"
+
+item_barrier_locked_name: "§cLocked"

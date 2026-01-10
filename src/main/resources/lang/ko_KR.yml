@@ -1,0 +1,30 @@
+command_common_invalid_number: "§c숫자 형식이 올바르지 않습니다."
+command_common_player_only: "§c플레이어만 사용 가능한 명령어입니다."
+
+command_defaultslot_invalid_slot: "§c슬롯은 1 이상이어야 합니다."
+command_defaultslot_set_success: "§a기본 저장소 슬롯이 {0}으로 설정되었습니다."
+
+command_lookup_data_not_found: "§c해당 플레이어의 데이터가 존재하지 않습니다."
+command_lookup_player_not_found: "§c플레이어를 찾을 수 없습니다."
+
+command_reload_success: "§a플러그인이 리로드되었습니다."
+
+command_usage_defaultslot: "/dpvs defaultslot <slot>"
+command_usage_givecoupon: "/dpvs givecoupon <slots>"
+command_usage_lookup: "/dpvs lookup <player>"
+command_usage_open: "/dpvs open"
+command_usage_reload: "/dpvs reload"
+command_usage_setcoupon: "/dpvs setcoupon"
+
+coupon_cannot_increase_more: "§c가상 창고 슬롯을 더 이상 늘릴 수 없습니다."
+coupon_given: "§a쿠폰을 지급하였습니다. ({0} 슬롯)"
+coupon_invalid_slots: "§c쿠폰 슬롯이 올바르지 않습니다."
+coupon_item_saved: "§a쿠폰 아이템이 저장되었습니다."
+coupon_not_configured: "§c쿠폰 아이템이 설정되어 있지 않습니다. 관리자에게 문의하세요."
+coupon_used_increase_slots: "§a쿠폰이 사용되었습니다. 가상 창고 슬롯이 {0}칸 증가하였습니다."
+
+gui_coupon_setting_title: "§6쿠폰 설정"
+
+inventory_storage_title: "가상 창고"
+
+item_barrier_locked_name: "§c잠김"
