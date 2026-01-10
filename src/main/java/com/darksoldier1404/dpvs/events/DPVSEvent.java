@@ -27,7 +27,7 @@ public class DPVSEvent implements Listener {
         if (!plugin.udata.containsKey(p.getUniqueId())) {
             VUser data = new VUser();
             data.setUUID(p.getUniqueId());
-            DInventory inv = new DInventory("Storage", 54, true, true, plugin);
+            DInventory inv = new DInventory(plugin.getLang().get("inventory_storage_title"), 54, true, true, plugin);
             inv.update();
             data.setInventory(inv);
             plugin.udata.put(p.getUniqueId(), data);
@@ -66,7 +66,7 @@ public class DPVSEvent implements Listener {
             if (inv.isValidChannel(101)) {
                 inv.applyChanges();
                 DPVSFunction.saveCouponItem(inv.getItem(13));
-                p.sendMessage(plugin.getPrefix() + "§a쿠폰 아이템이 저장되었습니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("coupon_item_saved"));
                 return;
             }
         }
@@ -82,17 +82,17 @@ public class DPVSEvent implements Listener {
             e.setCancelled(true);
             int slots = NBT.getIntegerTag(item, "dpvs_couponslot");
             if (slots < 1) {
-                p.sendMessage("§c쿠폰 슬롯이 올바르지 않습니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("coupon_invalid_slots"));
                 return;
             }
             VUser user = plugin.udata.get(p.getUniqueId());
             boolean success = user.addStorageSlots(slots);
             if (success) {
-                p.sendMessage("§a쿠폰이 사용되었습니다. 가상 창고 슬롯이 " + slots + "칸 증가하였습니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("coupon_used_increase_slots", String.valueOf(slots)));
                 item.setAmount(item.getAmount() - 1);
                 plugin.udata.put(p.getUniqueId(), user);
             } else {
-                p.sendMessage("§c가상 창고 슬롯을 더 이상 늘릴 수 없습니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("coupon_cannot_increase_more"));
             }
         }
     }

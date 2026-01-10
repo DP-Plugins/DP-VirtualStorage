@@ -16,18 +16,19 @@ public class DPVSCommand {
 
     public DPVSCommand() {
         builder = new CommandBuilder(plugin);
-        builder.addSubCommand("defaultslot", "dpvs.admin", "/dpvs defaultslot <slot>", false, (p, args) -> {
+
+        builder.addSubCommand("defaultslot", "dpvs.admin", plugin.getLang().get("command_usage_defaultslot"), false, (p, args) -> {
             if (args.length == 2) {
                 try {
                     int slot = Integer.parseInt(args[1]);
                     if (slot < 1) {
-                        p.sendMessage(plugin.getPrefix() + "§c슬롯은 1 이상이어야 합니다.");
+                        p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_defaultslot_invalid_slot"));
                         return true;
                     }
                     plugin.defaultStorageSlot = slot;
                     plugin.getConfig().set("Settings.defaultStorageSlot", slot);
                     plugin.saveDataContainer();
-                    p.sendMessage(plugin.getPrefix() + "§a기본 저장소 슬롯이 " + slot + "으로 설정되었습니다.");
+                    p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("command_defaultslot_set_success", String.valueOf(slot)));
                     return true;
                 } catch (NumberFormatException e) {
                     return false;
@@ -36,9 +37,9 @@ public class DPVSCommand {
             return false;
         });
 
-        builder.addSubCommand("open", "dpvs.open", "/dpvs open", true, (p, args) -> {
+        builder.addSubCommand("open", "dpvs.open", plugin.getLang().get("command_usage_open"), true, (p, args) -> {
             if (!(p instanceof Player)) {
-                p.sendMessage(plugin.getPrefix() + "§c플레이어만 사용 가능한 명령어입니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_player_only"));
                 return true;
             }
             if (args.length == 1) {
@@ -50,21 +51,21 @@ public class DPVSCommand {
             return false;
         });
 
-        builder.addSubCommand("lookup", "dpvs.admin", "/dpvs lookup <player>", true, (p, args) -> {
+        builder.addSubCommand("lookup", "dpvs.admin", plugin.getLang().get("command_usage_lookup"), true, (p, args) -> {
             if (!(p instanceof Player)) {
-                p.sendMessage(plugin.getPrefix() + "§c플레이어만 사용 가능한 명령어입니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_player_only"));
                 return true;
             }
             if (args.length == 2) {
                 OfflinePlayer target = DPVSFunction.getOfflinePlayer(args[1]);
                 if (target == null) {
-                    p.sendMessage(plugin.getPrefix() + "§c플레이어를 찾을 수 없습니다.");
+                    p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_lookup_player_not_found"));
                     return true;
                 }
                 Player player = (Player) p;
                 VUser user = plugin.udata.get(target.getUniqueId());
                 if (user == null) {
-                    p.sendMessage(plugin.getPrefix() + "§c해당 플레이어의 데이터가 존재하지 않습니다.");
+                    p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_lookup_data_not_found"));
                     return true;
                 }
                 user.openInventory(player, true);
@@ -74,10 +75,10 @@ public class DPVSCommand {
         });
 
         // set coupon item
-        builder.addSubCommand("setcoupon", "dpvs.admin", "/dpvs setcoupon", true, (p, args) -> {
+        builder.addSubCommand("setcoupon", "dpvs.admin", plugin.getLang().get("command_usage_setcoupon"), true, (p, args) -> {
             if (args.length == 1) {
                 if (!(p instanceof Player)) {
-                    p.sendMessage(plugin.getPrefix() + "§c플레이어만 사용 가능한 명령어입니다.");
+                    p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_common_player_only"));
                     return true;
                 }
                 Player player = (Player) p;
@@ -88,7 +89,7 @@ public class DPVSCommand {
         });
 
         // give coupon
-        builder.addSubCommand("givecoupon", "dpvs.admin", "/dpvs givecoupon <slots>", true, (p, args) -> {
+        builder.addSubCommand("givecoupon", "dpvs.admin", plugin.getLang().get("command_usage_givecoupon"), true, (p, args) -> {
             if (args.length == 2) {
                 DPVSFunction.giveCoupon(p, args[1]);
                 return true;
@@ -96,10 +97,10 @@ public class DPVSCommand {
             return false;
         });
 
-        builder.addSubCommand("reload", "dpvs.admin", "/dpvs reload", false, (p, args) -> {
+        builder.addSubCommand("reload", "dpvs.admin", plugin.getLang().get("command_usage_reload"), false, (p, args) -> {
             if (args.length == 1) {
                 plugin.reload();
-                p.sendMessage(plugin.getPrefix() + "§a플러그인이 리로드되었습니다.");
+                p.sendMessage(plugin.getPrefix() + plugin.getLang().get("command_reload_success"));
                 return true;
             }
             return false;

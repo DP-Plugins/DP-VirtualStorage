@@ -1,7 +1,6 @@
 package com.darksoldier1404.dpvs;
 
 import com.darksoldier1404.dppc.annotation.DPPCoreVersion;
-import com.darksoldier1404.dppc.api.logger.DLogNode;
 import com.darksoldier1404.dppc.data.DPlugin;
 import com.darksoldier1404.dppc.data.DataContainer;
 import com.darksoldier1404.dppc.data.DataType;
@@ -19,7 +18,7 @@ public class VirtualStorage extends DPlugin {
     public static int defaultStorageSlot;
 
     public VirtualStorage() {
-        super(false);
+        super(true);
         plugin = this;
         init();
         udata = loadDataContainer(new DataContainer<>(this, DataType.CUSTOM, "udata"), VUser.class);

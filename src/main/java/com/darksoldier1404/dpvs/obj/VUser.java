@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Map;
 import java.util.UUID;
 
 import static com.darksoldier1404.dpvs.VirtualStorage.plugin;
@@ -61,7 +60,7 @@ public class VUser implements DataCargo {
 
         ItemStack barrier = new ItemStack(Material.BARRIER);
         ItemMeta im = barrier.getItemMeta();
-        im.setDisplayName("§c잠김");
+        im.setDisplayName(plugin.getLang().get("item_barrier_locked_name"));
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         barrier.setItemMeta(im);
         barrier = NBT.setStringTag(barrier, "dpvs_barrier", "true");
@@ -111,7 +110,7 @@ public class VUser implements DataCargo {
     public VUser deserialize(YamlConfiguration data) {
         this.uuid = UUID.fromString(data.getString("uuid"));
         this.maxStorageSlot = data.getInt("maxStorageSlot");
-        this.inventory = new DInventory("가상 창고", 54, true, true, plugin).deserialize(data);
+        this.inventory = new DInventory(plugin.getLang().get("inventory_storage_title"), 54, true, true, plugin).deserialize(data);
         return this;
     }
 
