@@ -22,7 +22,6 @@ Players can safely store items in a virtual inventory that is accessible anytime
 - All DP-Plugins require the **`DPP-Core`** plugin  
 - The plugin will not work if **`DPP-Core`** is not installed  
 - You can download **`DPP-Core`** here: <a href="https://github.com/DP-Plugins/DPP-Core/releases" target="_blank">Click me!</a>  
-- **PlaceholderAPI** is supported (optional, based on plugin.yml)  
 
 ---
 
@@ -74,7 +73,7 @@ Players can safely store items in a virtual inventory that is accessible anytime
 
 <center><img src="https://i.postimg.cc/Z5ZH0fqL/api-integration.png" alt="api-integration"></center>
 
-- Supports **PlaceholderAPI** for dynamic text  
+- No external API integrations are used  
 
 ---
 
